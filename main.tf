@@ -138,6 +138,16 @@ data "cloudinit_config" "config" {
   gzip          = false
   base64_encode = false
 
+  # Add any initial cloud-init configuration or scripts provided by the user
+  dynamic "part" {
+    for_each = var.cloudinit_part_init
+    content {
+      merge_type   = "list(append)+dict(no_replace,recurse_list)+str()"
+      content_type = part.value.content_type
+      content      = part.value.content
+    }
+  }
+
   part {
     filename     = "cloud-init.yaml"
     merge_type   = "list(append)+dict(no_replace,recurse_list)+str()"

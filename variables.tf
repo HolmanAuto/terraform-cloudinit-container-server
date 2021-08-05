@@ -34,6 +34,12 @@ variable "container" {
   default     = {}
 }
 
+variable "cloudinit_part_init" {
+  description = "Initial cloud-init configuration used to setup and/or customise the instance beyond the defaults provided by this module."
+  type        = list(object({ content_type : string, content : string }))
+  default     = []
+}
+
 variable "cloudinit_part" {
   description = "Additional cloud-init configuration used to setup and/or customise the instance beyond the defaults provided by this module."
   type        = list(object({ content_type : string, content : string }))
